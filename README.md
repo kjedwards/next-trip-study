@@ -1,46 +1,31 @@
-# Getting Started with Create React App
+# NextTrip Case Study
+*Authored By Kaylee Edwards*
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## How to Run
 
-## Available Scripts
+**Local Development (run on `localhost:3000`):** `npm start`
 
-In the project directory, you can run:
+**Build:** `npm build`
 
-### `npm start`
+**Test**: `npm test`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
+## Architecture Decisions
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+This application was created using `create-react-app` with the Typescript template. 
+React is a quick way to build prototypes, and Typescript means the coding style is fairly opinionated.
 
-### `npm run build`
+Testing is done with `@testing-library/react`. This was automatically installed by `create-react-app`. 
+My other choice was `enzyme`, but I believe both are decent choices, so I didn't have much reason to change it.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+I set up `eslint` with my preferred styling to make sure I am consistent and adhering to standards.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+I chose `react-query` for this application not only because it was brought up in a previous interview and I want to try it, 
+but also because after evaluating it against `redux` and `mobX`, this seems like it needs less setup. 
+Especially considering that this is a single page application with extremely straightforward functionality and API interactions,
+I felt this was the best way to go.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## Assumptions
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
