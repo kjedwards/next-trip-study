@@ -1,18 +1,25 @@
-import {RouteType} from '../services/types';
 import React from 'react';
+import {RouteType} from '../services/types';
+import Select, {SingleValue} from 'react-select';
 
 interface RoutesProps {
-    routes: Array<RouteType>;
+  routes: Array<RouteType>;
+  updateFunc: (value: SingleValue<{ value: string; label: string; }>, dropdownType: 'route' | 'direction' | 'stop') => void;
 }
 
-const Routes = ({ routes } : RoutesProps )  => {
+const Routes = ({ routes, updateFunc } : RoutesProps )  => {
+  // Map options
+  const options = routes.map(route => {
+    return { value: route.route_id, label: route.route_label};
+  });
+
   return (
     <>
-      {routes?.map((route : RouteType) => (
-        <p key={route.route_id}>
-          {route.route_label}
-        </p>
-      ))}
+      <Select
+        options={options}
+        onChange={(e) => updateFunc(e, 'route')}
+        placeholder={'Find Your Route'}
+      />
     </>
   );
 };

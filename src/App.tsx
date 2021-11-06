@@ -25,14 +25,15 @@ const queryClient = new QueryClient({
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<TransitRouteWrapper />} />
-        </Route>
-      </Routes>
-    </QueryClientProvider>
+    <React.Suspense fallback={<div>boop</div>}>
+      <QueryClientProvider client={queryClient}>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<TransitRouteWrapper />} />
+          </Route>
+        </Routes>
+      </QueryClientProvider>
+    </React.Suspense>
   );
 }
 

@@ -26,6 +26,9 @@ but also because after evaluating it against `redux` and `mobX`, this seems like
 Especially considering that this is a single page application with extremely straightforward functionality and API interactions,
 I felt this was the best way to go.
 
+For the options, I chose `react-select`. In my experience, it has been quite a robust option. It allows for searchable options
+as well as async.
+
 
 ## Assumptions
 
