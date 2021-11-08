@@ -1,5 +1,5 @@
 interface StopObject {
-    stop_id: number;
+    stop_id: string | number;
     latitude: number;
     longitude: number;
     description: string
@@ -27,7 +27,7 @@ interface DepartureObject {
 }
 
 export interface StopType {
-    stops: Array<StopObject>;
-    alerts: Array<AlertObject>;
-    departures: Array<DepartureObject>;
+    stops: StopObject[];
+    alerts: AlertObject[];
+    departures: DepartureObject[];
 }

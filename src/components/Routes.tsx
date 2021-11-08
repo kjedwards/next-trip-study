@@ -3,8 +3,8 @@ import {RouteType} from '../services/types';
 import Select, {SingleValue} from 'react-select';
 
 interface RoutesProps {
-  routes: Array<RouteType>;
-  updateFunc: (value: SingleValue<{ value: string; label: string; }>, dropdownType: 'route' | 'direction' | 'stop') => void;
+  routes: RouteType[];
+  updateFunc: (value: SingleValue<{ value: string | number; label: string; }>, dropdownType: 'route' | 'direction' | 'stop') => void;
 }
 
 const Routes = ({ routes, updateFunc } : RoutesProps )  => {

@@ -1,5 +1,5 @@
 export interface TransitQueryType {
-    data: Array<unknown>;
+    data: unknown[];
     error: string;
     isFetching: boolean;
     isLoading: boolean;
