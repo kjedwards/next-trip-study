@@ -1,26 +1,28 @@
-import React, {lazy, useState, useEffect} from 'react';
+import React, {lazy, useEffect, useState} from 'react';
 import {QueryErrorResetBoundary, useQuery} from 'react-query';
 import {TransitServiceUrls} from '../services/TransitServiceUrls';
 import {ErrorBoundary} from 'react-error-boundary';
 import {SingleValue} from 'react-select';
-import {RouteDirectionType, StopType} from '../services/types';
+import {Navigate, Outlet, useParams} from 'react-router-dom';
+
+import {RouteDirectionType, RouteType, StopListType} from '../services/types';
 
 const Routes = lazy(() => import('./Routes'));
 const Directions = lazy(() => import('./Directions'));
 const Stops = lazy(() => import('./Stops'));
 
-const loadingComponent = () => <h1>Loading routes...</h1>;
-
 export const TransitRouteWrapper = () : JSX.Element  => {
+  const { routeId } = useParams<'routeId'>();
+  const { directionId } = useParams<'directionId'>();
+  const { stopId } = useParams<'stopId'>();
+
   // User Selections
   const [routeSelection, updateRouteSelection] = useState<SingleValue<{ value: string | number; label: string; }>>({value: '', label: ''});
-  const [directionSelection, updateDirectionSelection] = useState<SingleValue<{ value: string | number; label: string; }>>({value: -1, label: ''});
+  const [directionSelection, updateDirectionSelection] = useState<SingleValue<{ value: string | number; label: string; }>>({value: '', label: ''});
   const [stopSelection, updateStopSelection] = useState<SingleValue<{ value: string | number; label: string; }>>({value: '', label: ''});
 
   // Update User Selection
   const updateUserSelection = (value: SingleValue<{ value: string | number; label: string; }>, dropdownType: 'route' | 'direction' | 'stop') => {
-    console.log(value);
-
     if (dropdownType === 'route') {
       updateRouteSelection(value);
     } else if (dropdownType === 'direction') {
@@ -46,7 +48,7 @@ export const TransitRouteWrapper = () : JSX.Element  => {
     }
   );
 
-  // Retrieve Directions on route selection change
+  // Retrieve Stops on route selection change
   const { data: stops } = useQuery(
     ['stops', directionSelection?.value],
     () =>
@@ -60,20 +62,37 @@ export const TransitRouteWrapper = () : JSX.Element  => {
   );
 
   useEffect(() => {
-    console.log('route', routeSelection);
-    console.log('direction', directionSelection);
-    console.log('directions', directions);
-  }, [routeSelection, directionSelection, directions]);
+    if (routes && routeId && !routeSelection?.value) {
+      const routeFromUrl = routes.find((route :RouteType) => route.route_id === routeId);
+      updateRouteSelection({
+        value: routeId,
+        label: routeFromUrl.route_label,
+      });
+    }
+  }, [routes, routeId, routeSelection]);
 
-  // Retrieve stops on route and direction selection change
-  // useEffect(() => {
-  //   stops = useQuery('stops', () =>
-  //     fetch(TransitServiceUrls.getFetchStopsUrl(routeSelection?.value, directionSelection?.value)).then((res) => res.json())
-  //   ).data;
-  // }, [routeSelection, directionSelection]);
+  useEffect(() => {
+    if (directions && directionId && !directionSelection?.value) {
+      const directionFromUrl = directions.find((direction :RouteDirectionType) => direction.direction_id.toString() === directionId);
+      updateDirectionSelection({
+        value: directionId,
+        label: directionFromUrl.direction_name,
+      });
+    }
+  }, [directions, directionId, directionSelection]);
+
+  useEffect(() => {
+    if (stops && stopId && !stopSelection?.value) {
+      const stopFromUrl = stops.find((stop :StopListType) => stop.place_code === stopId);
+      updateStopSelection({
+        value: stopId,
+        label: stopFromUrl.description,
+      });
+    }
+  }, [stops, stopId, stopSelection]);
 
   return (
-    <React.Suspense fallback={loadingComponent}>
+    <React.Suspense fallback={<h1>loading</h1>}>
       <QueryErrorResetBoundary>
         {({ reset }) => (
         //TODO: Set up error page
@@ -86,9 +105,14 @@ export const TransitRouteWrapper = () : JSX.Element  => {
             )}
             onReset={reset}
           >
-            <Routes routes={routes} updateFunc={updateUserSelection} />
-            { directions && <Directions directions={directions} updateFunc={updateUserSelection} /> }
-            { stops && <Stops stops={stops} updateFunc={updateUserSelection} /> }
+            <Routes routes={routes} value={routeSelection} updateFunc={updateUserSelection} />
+            { directions && <Directions directions={directions} value={directionSelection} updateFunc={updateUserSelection} /> }
+            { stops && <Stops stops={stops} value={stopSelection} updateFunc={updateUserSelection} /> }
+            {
+              routeSelection?.value && directionSelection?.value && stopSelection?.value && !routeId
+              && <Navigate to={`/routes/${routeSelection.value}/${directionSelection.value}/${stopSelection.value}`} />
+            }
+            <Outlet />
           </ErrorBoundary>
         )}
       </QueryErrorResetBoundary>

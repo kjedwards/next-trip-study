@@ -4,10 +4,11 @@ import {RouteDirectionType} from '../services/types';
 
 interface DirectionsProps {
     directions: RouteDirectionType[],
+    value: SingleValue<{ value: string | number; label: string; }>,
     updateFunc: (value: SingleValue<{ value: string | number; label: string; }>, dropdownType: 'route' | 'direction' | 'stop') => void;
 }
 
-const Directions = ({ directions, updateFunc } : DirectionsProps )  => {
+const Directions = ({ directions, value, updateFunc } : DirectionsProps ) : JSX.Element => {
 
   // Map options
   const options = directions?.map((direction: RouteDirectionType) => {
@@ -20,6 +21,7 @@ const Directions = ({ directions, updateFunc } : DirectionsProps )  => {
         options={options}
         onChange={(e) => updateFunc(e, 'direction')}
         placeholder={'Choose Direction'}
+        value={value}
       />
     </React.Suspense>
   );

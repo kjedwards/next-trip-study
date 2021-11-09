@@ -1,18 +1,21 @@
 import React from 'react';
 import {
-  Routes,
-  Route,
   Outlet,
-  Link,
-  useSearchParams,
-  useParams
 } from 'react-router-dom';
+
+import {NavConfig} from './configs/navConfig';
+import { Navbar } from './styled-components';
 
 export const Layout = () : JSX.Element  => {
   return(
     <>
-      <h1>Header</h1>
-      <Outlet />
+      <header>
+        <Navbar navItems={NavConfig}/>
+      </header>
+      <main>
+        <h1>Header</h1>
+        <Outlet />
+      </main>
     </>
   );
 };

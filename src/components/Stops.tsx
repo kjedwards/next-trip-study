@@ -1,15 +1,14 @@
 import React from 'react';
 import Select, {SingleValue} from 'react-select';
-import {useQuery} from 'react-query';
-import {TransitServiceUrls} from '../services/TransitServiceUrls';
 import {StopListType} from '../services/types';
 
 interface StopsProps {
   stops: StopListType[];
-  updateFunc: (value: SingleValue<{ value: string; label: string; }>, dropdownType: 'route' | 'direction' | 'stop') => void;
+  value: SingleValue<{ value: string | number; label: string; }>,
+  updateFunc: (value: SingleValue<{ value: string | number; label: string; }>, dropdownType: 'route' | 'direction' | 'stop') => void;
 }
 
-const Stops = ({ stops, updateFunc } : StopsProps )  => {
+const Stops = ({ stops, value, updateFunc } : StopsProps ) : JSX.Element => {
   // Map options
   const options = stops?.map((stop: StopListType) => {
     return {value: stop.place_code, label: stop.description};
@@ -21,6 +20,7 @@ const Stops = ({ stops, updateFunc } : StopsProps )  => {
         options={options}
         onChange={(e) => updateFunc(e, 'stop')}
         placeholder={'Choose Stop'}
+        value={value}
       />
     </React.Suspense>
   );

@@ -6,13 +6,12 @@ import {
 import {
   Routes,
   Route,
-  Link,
-  useSearchParams,
-  useParams
 } from 'react-router-dom';
 
 import { Layout } from './components/Layout';
+import { Home } from './components/Home';
 import { TransitRouteWrapper } from './components/TransitRouteWrapper';
+import { StopInfo } from './components/StopInfo';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,13 +22,16 @@ const queryClient = new QueryClient({
   },
 });
 
-function App() {
+function App() : JSX.Element {
   return (
     <React.Suspense fallback={<div>boop</div>}>
       <QueryClientProvider client={queryClient}>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<TransitRouteWrapper />} />
+            <Route index element={<Home />} />
+            <Route path={'/routes'} element={<TransitRouteWrapper />}>
+              <Route path={'/routes/:routeId/:directionId/:stopId'} element={<StopInfo />} />
+            </Route>
           </Route>
         </Routes>
       </QueryClientProvider>
