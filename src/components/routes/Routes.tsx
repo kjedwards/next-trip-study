@@ -17,7 +17,7 @@ const Routes = ({ routes, value, updateFunc } : RoutesProps ) : JSX.Element  => 
   });
 
   return (
-    <Row justifyContent={'center'}>
+    <Row justifyContent={'center'} data-testid={'routes-dropdown'}>
       <Column minWidth={'300px'} width={'80%'} maxWidth={'1200px'} padding={'1rem'}>
         <Select
           isSearchable

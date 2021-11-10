@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import { ThemeConfig } from '../configs/themeConfig';
 
 const Block = styled.div`
-  width: 400px;
-  height: 400px;
   color: ${ThemeConfig.text2};
   background-color: ${ThemeConfig.block};
   padding: 2rem;
@@ -16,7 +14,7 @@ const Block = styled.div`
   }
 `;
 
-export const CovidAlert = () => {
+export const CovidAlert = () : JSX.Element => {
   return(
     <Block>
       <h1>We are Socially Distancing</h1>

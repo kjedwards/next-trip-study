@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 import BannerHome from '../../images/BannerHome.jpg';
 import {BannerImage, BodyWrapper} from '../styled-components';
 import {CovidAlert} from './CovidAlert';
@@ -13,10 +12,10 @@ export const Home = () : JSX.Element => {
       <BannerImage src={BannerHome} alt={'Commuters waiting at a bus stop'} />
       <BodyWrapper>
         <Row wrap={'wrap'}>
-          <Column>
+          <Column maxWidth={'400px'} padding={'1rem'}>
             <CovidAlert />
           </Column>
-          <Column maxWidth="500px">
+          <Column width={'80vw'} minWidth={'250px'} maxWidth={'450px'}>
             <h2>Lorem Ipsum</h2>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -27,13 +26,13 @@ export const Home = () : JSX.Element => {
 
             <ul>
               <li>
-                <Link to={'/routes'}>Stop Finder</Link>
+                <StyledLink to={'/routes'}>Stop Finder</StyledLink>
               </li>
               <li>
-                <Link to={'#'}>Another Tool</Link>
+                <StyledLink to={'#'}>Another Tool</StyledLink>
               </li>
               <li>
-                <Link to={'#'}>Another Tool</Link>
+                <StyledLink to={'#'}>Another Tool</StyledLink>
               </li>
             </ul>
           </Column>

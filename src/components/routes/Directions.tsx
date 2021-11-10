@@ -18,7 +18,7 @@ const Directions = ({ directions, value, updateFunc } : DirectionsProps ) : JSX.
   });
 
   return (
-    <Row justifyContent={'center'}>
+    <Row justifyContent={'center'} data-testid={'directions-dropdown'}>
       <Column minWidth={'300px'} width={'80%'} maxWidth={'1200px'} padding={'1rem'}>
         <Select
           options={options}

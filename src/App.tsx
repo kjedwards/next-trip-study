@@ -24,9 +24,9 @@ const queryClient = new QueryClient({
 
 function App() : JSX.Element {
   return (
-    <React.Suspense fallback={<div>boop</div>}>
+    <React.Suspense fallback={<div>Loading...</div>}>
       <QueryClientProvider client={queryClient}>
-        <Routes>
+        <Routes data-testid={'app'}>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path={'/routes'} element={<TransitRouteWrapper />}>
