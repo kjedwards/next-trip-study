@@ -9,6 +9,9 @@
 
 **Test**: `npm test`
 
+## How to access via the web 
+
+https://next-trip-study.herokuapp.com/
 
 ## Architecture Decisions
 
