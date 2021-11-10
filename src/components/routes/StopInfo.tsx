@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import {useQuery} from 'react-query';
-import {TransitServiceUrls} from '../services/TransitServiceUrls';
+import {TransitServiceUrls} from '../../services/TransitServiceUrls';
 
 export const StopInfo = () : JSX.Element => {
   const { routeId } = useParams<'routeId'>();

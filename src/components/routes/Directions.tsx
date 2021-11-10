@@ -1,11 +1,12 @@
 import React from 'react';
 import Select, {SingleValue} from 'react-select';
-import {RouteDirectionType} from '../services/types';
+import {RouteDirectionType} from '../../services/types';
+import {Selection} from './TransitRouteWrapper';
 
 interface DirectionsProps {
     directions: RouteDirectionType[],
-    value: SingleValue<{ value: string | number; label: string; }>,
-    updateFunc: (value: SingleValue<{ value: string | number; label: string; }>, dropdownType: 'route' | 'direction' | 'stop') => void;
+    value: SingleValue<Selection>,
+    updateFunc: (value: SingleValue<Selection>, dropdownType: 'route' | 'direction' | 'stop') => void;
 }
 
 const Directions = ({ directions, value, updateFunc } : DirectionsProps ) : JSX.Element => {
@@ -19,9 +20,9 @@ const Directions = ({ directions, value, updateFunc } : DirectionsProps ) : JSX.
     <React.Suspense fallback={<h1>LOADING</h1>}>
       <Select
         options={options}
-        onChange={(e) => updateFunc(e, 'direction')}
+        onChange={(e) => updateFunc(e || {value: '', label: ''}, 'direction')}
         placeholder={'Choose Direction'}
-        value={value}
+        value={value?.value && value}
       />
     </React.Suspense>
   );

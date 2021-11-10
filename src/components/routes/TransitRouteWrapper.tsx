@@ -1,15 +1,22 @@
 import React, {lazy, useEffect, useState} from 'react';
 import {QueryErrorResetBoundary, useQuery} from 'react-query';
-import {TransitServiceUrls} from '../services/TransitServiceUrls';
+import {TransitServiceUrls} from '../../services/TransitServiceUrls';
 import {ErrorBoundary} from 'react-error-boundary';
 import {SingleValue} from 'react-select';
 import {Navigate, Outlet, useParams} from 'react-router-dom';
+import BannerNexTrip from '../../images/BannerNexTrip.jpg';
+import {BannerImage, BodyWrapper} from '../styled-components';
 
-import {RouteDirectionType, RouteType, StopListType} from '../services/types';
+import {RouteDirectionType, RouteType, StopListType} from '../../services/types';
 
 const Routes = lazy(() => import('./Routes'));
 const Directions = lazy(() => import('./Directions'));
 const Stops = lazy(() => import('./Stops'));
+
+export interface Selection {
+  value: string | number;
+  label: string | null;
+}
 
 export const TransitRouteWrapper = () : JSX.Element  => {
   const { routeId } = useParams<'routeId'>();
@@ -17,12 +24,12 @@ export const TransitRouteWrapper = () : JSX.Element  => {
   const { stopId } = useParams<'stopId'>();
 
   // User Selections
-  const [routeSelection, updateRouteSelection] = useState<SingleValue<{ value: string | number; label: string; }>>({value: '', label: ''});
-  const [directionSelection, updateDirectionSelection] = useState<SingleValue<{ value: string | number; label: string; }>>({value: '', label: ''});
-  const [stopSelection, updateStopSelection] = useState<SingleValue<{ value: string | number; label: string; }>>({value: '', label: ''});
+  const [routeSelection, updateRouteSelection] = useState<SingleValue<Selection>>({value: '', label: ''});
+  const [directionSelection, updateDirectionSelection] = useState<SingleValue<Selection>>({value: '', label: ''});
+  const [stopSelection, updateStopSelection] = useState<SingleValue<Selection>>({value: '', label: ''});
 
   // Update User Selection
-  const updateUserSelection = (value: SingleValue<{ value: string | number; label: string; }>, dropdownType: 'route' | 'direction' | 'stop') => {
+  const updateUserSelection = (value: SingleValue<Selection>, dropdownType: 'route' | 'direction' | 'stop') => {
     if (dropdownType === 'route') {
       updateRouteSelection(value);
     } else if (dropdownType === 'direction') {
@@ -92,30 +99,35 @@ export const TransitRouteWrapper = () : JSX.Element  => {
   }, [stops, stopId, stopSelection]);
 
   return (
-    <React.Suspense fallback={<h1>loading</h1>}>
-      <QueryErrorResetBoundary>
-        {({ reset }) => (
-        //TODO: Set up error page
-          <ErrorBoundary
-            fallbackRender={({ error, resetErrorBoundary }) => (
-              <div>
-                <button onClick={() => resetErrorBoundary()}>Try again</button>
-                <pre style={{ whiteSpace: 'normal' }}>{error.message}</pre>
-              </div>
-            )}
-            onReset={reset}
-          >
-            <Routes routes={routes} value={routeSelection} updateFunc={updateUserSelection} />
-            { directions && <Directions directions={directions} value={directionSelection} updateFunc={updateUserSelection} /> }
-            { stops && <Stops stops={stops} value={stopSelection} updateFunc={updateUserSelection} /> }
-            {
-              routeSelection?.value && directionSelection?.value && stopSelection?.value && !routeId
+    <>
+      <BannerImage src={BannerNexTrip} alt={'Woman with ear buds waiting for train'} />
+      <BodyWrapper>
+        <React.Suspense fallback={<h1>loading</h1>}>
+          <QueryErrorResetBoundary>
+            {({ reset }) => (
+            //TODO: Set up error page
+              <ErrorBoundary
+                fallbackRender={({ error, resetErrorBoundary }) => (
+                  <div>
+                    <button onClick={() => resetErrorBoundary()}>Try again</button>
+                    <pre style={{ whiteSpace: 'normal' }}>{error.message}</pre>
+                  </div>
+                )}
+                onReset={reset}
+              >
+                <Routes routes={routes} value={routeSelection} updateFunc={updateUserSelection} />
+                { directions && <Directions directions={directions} value={directionSelection} updateFunc={updateUserSelection} /> }
+                { stops && <Stops stops={stops} value={stopSelection} updateFunc={updateUserSelection} /> }
+                {
+                  routeSelection?.value && directionSelection?.value && stopSelection?.value && !routeId
               && <Navigate to={`/routes/${routeSelection.value}/${directionSelection.value}/${stopSelection.value}`} />
-            }
-            <Outlet />
-          </ErrorBoundary>
-        )}
-      </QueryErrorResetBoundary>
-    </React.Suspense>
+                }
+                <Outlet />
+              </ErrorBoundary>
+            )}
+          </QueryErrorResetBoundary>
+        </React.Suspense>
+      </BodyWrapper>
+    </>
   );
 };

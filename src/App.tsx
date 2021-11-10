@@ -9,9 +9,9 @@ import {
 } from 'react-router-dom';
 
 import { Layout } from './components/Layout';
-import { Home } from './components/Home';
-import { TransitRouteWrapper } from './components/TransitRouteWrapper';
-import { StopInfo } from './components/StopInfo';
+import { Home } from './components/home/Home';
+import { TransitRouteWrapper } from './components/routes/TransitRouteWrapper';
+import { StopInfo } from './components/routes/StopInfo';
 
 const queryClient = new QueryClient({
   defaultOptions: {
