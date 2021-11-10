@@ -106,7 +106,7 @@ export const TransitRouteWrapper = () : JSX.Element  => {
         <React.Suspense fallback={<h1>loading</h1>}>
           <QueryErrorResetBoundary>
             {({ reset }) => (
-            //TODO: Set up error page
+            //TODO: Set up actual error page
               <ErrorBoundary
                 fallbackRender={({ error, resetErrorBoundary }) => (
                   <div>

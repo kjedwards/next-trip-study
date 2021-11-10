@@ -10,7 +10,6 @@
 **Test**: `npm test`
 
 
-
 ## Architecture Decisions
 
 This application was created using `create-react-app` with the Typescript template. 
@@ -32,3 +31,17 @@ as well as async.
 
 ## Assumptions
 
+Upon getting stop data from the API, the `stops` array only contains one element.
+
+
+## Known Issues
+
+If you change the dropdowns in the wrong order, strange behavior can occur.
+
+After selecting all three drop downs, the page routes to a page with the ids in the url. Upon hitting the back button, it loops back into navigating to the page with the ids.
+
+Styles aren't mobile friendly
+
+Lacking accessibility feature of a skip navigation button
+
+All of these are things that I know how to fix, but I ran out of time.
