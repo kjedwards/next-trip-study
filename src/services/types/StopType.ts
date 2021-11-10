@@ -1,16 +1,16 @@
-interface StopObject {
+export interface StopObject {
     stop_id: string | number;
     latitude: number;
     longitude: number;
-    description: string
+    description: string;
 }
 
-interface AlertObject {
+export interface AlertObject {
     stop_closed: boolean;
     alert_text: string;
 }
 
-interface DepartureObject {
+export interface DepartureObject {
     actual: boolean;
     trip_id: string;
     stop_id: number;
@@ -21,7 +21,7 @@ interface DepartureObject {
     route_id: string;
     route_short_name: string;
     direction_id: number;
-    direction_test: string;
+    direction_text: string;
     terminal: string;
     schedule_relationship: string;
 }

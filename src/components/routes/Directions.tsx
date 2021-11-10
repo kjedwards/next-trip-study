@@ -1,6 +1,7 @@
 import React from 'react';
 import Select, {SingleValue} from 'react-select';
 import {RouteDirectionType} from '../../services/types';
+import {Row, Column} from '../styled-components';
 import {Selection} from './TransitRouteWrapper';
 
 interface DirectionsProps {
@@ -17,14 +18,16 @@ const Directions = ({ directions, value, updateFunc } : DirectionsProps ) : JSX.
   });
 
   return (
-    <React.Suspense fallback={<h1>LOADING</h1>}>
-      <Select
-        options={options}
-        onChange={(e) => updateFunc(e || {value: '', label: ''}, 'direction')}
-        placeholder={'Choose Direction'}
-        value={value?.value && value}
-      />
-    </React.Suspense>
+    <Row justifyContent={'center'}>
+      <Column minWidth={'300px'} width={'80%'} maxWidth={'1200px'} padding={'1rem'}>
+        <Select
+          options={options}
+          onChange={(e) => updateFunc(e || {value: '', label: ''}, 'direction')}
+          placeholder={'Choose Direction'}
+          value={value?.value && value}
+        />
+      </Column>
+    </Row>
   );
 };
 
